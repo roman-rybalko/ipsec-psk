@@ -20,7 +20,7 @@ Considered **xfrm** [internal](https://paulgorman.org/technical/ipsec.txt.html) 
 ## Limitations
  - Supports **ESP** encryption only (neither **AH** nor **ESP auth**)
  - Supports **transport** mode only
- - Supports only a single **SPI** (single user) per a distinct listening port
+ - Supports only a single **SPI** (single login but multiple users allowed) per a distinct listening port
  - Network Address Translation (**NAT**) is not supported
  - Due to limited event poll frequency initial connection establishing takes at least 2 seconds
  - Stale **SAD** entries are not cleared (server)
