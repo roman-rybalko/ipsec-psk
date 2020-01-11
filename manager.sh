@@ -13,11 +13,21 @@ fi
 . "$conf"
 . "$cconf"
 
+if [ -z "$SERVER" ]; then
+	# client
+	dir1="out"
+	dir2="in"
+	dir="src"
+else
+	# server
+	dir1="in"
+	dir2="out"
+	dir="dst"
+fi
+
 ip xfrm state deleteall spi $USER
-ip xfrm policy deleteall dst $SRV_ADDR proto $SRV_PROTO dport $SRV_PORT dir in
-ip xfrm policy deleteall dst $SRV_ADDR proto $SRV_PROTO dport $SRV_PORT dir out
-ip xfrm policy deleteall src $SRV_ADDR proto $SRV_PROTO sport $SRV_PORT dir in
-ip xfrm policy deleteall src $SRV_ADDR proto $SRV_PROTO sport $SRV_PORT dir out
+ip xfrm policy deleteall dst $SRV_ADDR proto $SRV_PROTO dport $SRV_PORT dir $dir1
+ip xfrm policy deleteall src $SRV_ADDR proto $SRV_PROTO sport $SRV_PORT dir $dir2
 
 [ -z "$CLEAR_ONLY" ] || exit 0
 
@@ -31,16 +41,8 @@ if ! [ -e "$MONITOR_JOURNAL" ]; then
 	exit 1
 fi
 
-if [ -z "$SERVER" ]; then
-	# client
-	dir1="out"
-	dir2="in"
-	dir="src"
-else
+if [ -n "$SERVER" ]; then
 	# server
-	dir1="in"
-	dir2="out"
-	dir="dst"
 	ip xfrm state add dst $SRV_ADDR proto esp spi $USER enc "$ENC_ALG" "$PASSWORD" mode transport
 fi
 
