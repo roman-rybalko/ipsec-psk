@@ -70,12 +70,12 @@ while [ -e "$MONITOR_JOURNAL" ]; do
 			if [ $spi = $USER ]; then
 				if [ -z "$SERVER" ]; then
 					# client
-					ip xfrm state update dst $SRV_ADDR proto esp spi $USER enc "$ENC_ALG" "$PASSWORD" mode transport
 					ip xfrm state get dst $cli_addr proto esp spi $USER >/dev/null 2>&1 ||
-						ip xfrm state add dst $cli_addr proto esp spi $USER enc "$ENC_ALG" "$PASSWORD" mode transport
+						ip xfrm state add dst $cli_addr proto esp spi $USER enc "$ENC_ALG" "$PASSWORD" mode transport limit time-hard $LIMIT_TIME
+					ip xfrm state update dst $SRV_ADDR proto esp spi $USER enc "$ENC_ALG" "$PASSWORD" mode transport limit time-hard $LIMIT_TIME
 				else
 					# server
-					ip xfrm state update dst $cli_addr proto esp spi $USER enc "$ENC_ALG" "$PASSWORD" mode transport
+					ip xfrm state update dst $cli_addr proto esp spi $USER enc "$ENC_ALG" "$PASSWORD" mode transport limit time-hard $LIMIT_TIME
 				fi
 			fi
 			spi=

@@ -25,7 +25,6 @@ Considered **xfrm** [internal](https://paulgorman.org/technical/ipsec.txt.html) 
  - Different connections require different **SPI** values
  - Network Address Translation (**NAT**) is not supported
  - Due to limited event poll frequency initial connection establishing takes at least 2 seconds
- - Stale **SAD** entries are not cleared
  - Tested with **IPv6** only
  - Tested on **Linux** 3.1x.x & **Android** 7 only
 
