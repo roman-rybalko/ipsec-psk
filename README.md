@@ -11,6 +11,7 @@ Due to **IPv6** [temporary address](https://tools.ietf.org/html/rfc4941#section-
 Uses `ip xfrm monitor acquire` notifications to update **SAD** entries.
 
 Maintaining different **SPI** values (different logins) for a single listening port requires additional support by OS framework (either **xfrm** or **iptables**).
+Maintaining a same **SPI** value for different server hosts on a single client host requires additional support by OS framework (**src** is not matched by **xfrm**).
 
 Considered **xfrm** [internal](https://paulgorman.org/technical/ipsec.txt.html) index:
   1. Hash table by (spi,daddr,ah/esp) to find SA by SPI. (input,ctl)
@@ -21,6 +22,7 @@ Considered **xfrm** [internal](https://paulgorman.org/technical/ipsec.txt.html) 
  - Supports **ESP** encryption only (neither **AH** nor **ESP auth**)
  - Supports **transport** mode only
  - Supports only a single **SPI** (single login but multiple users allowed) per a distinct listening port
+ - Different connections require different **SPI** values
  - Network Address Translation (**NAT**) is not supported
  - Due to limited event poll frequency initial connection establishing takes at least 2 seconds
  - Stale **SAD** entries are not cleared
