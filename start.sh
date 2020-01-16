@@ -6,7 +6,7 @@ set -x
 cd "`dirname "$0"`"
 umask 0077
 
-./stop.sh ./common.conf || true
+./stop.sh ./common.conf
 
 ./monitor.sh ./common.conf &
 ./manager.sh ./account1.conf ./common.conf &

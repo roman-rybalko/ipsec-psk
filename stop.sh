@@ -12,7 +12,7 @@ fi
 . "$conf"
 
 if [ -e "$MONITOR_JOURNAL" ]; then
-	kill `cat "$MONITOR_PID" 2>/dev/null` 2>/dev/null
+	kill `cat "$MONITOR_PID" 2>/dev/null` 2>/dev/null || true
 fi
 
 while kill -0 `cat "$MONITOR_PID" 2>/dev/null` 2>/dev/null; do
